@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amateur Radio Compass Bearing Finder</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-compass"></i> Amateur Radio Compass Bearing Finder</h1>
+            <p>Find compass bearings and distances for amateur radio operations</p>
+        </header>
+
+        <div class="main-content">
+            <div class="controls-panel">
+                <div class="location-section">
+                    <h3><i class="fas fa-map-marker-alt"></i> Current Location</h3>
+                    <div class="coordinates">
+                        <div class="coord-input">
+                            <label for="lat">Latitude:</label>
+                            <input type="number" id="lat" step="0.000001" placeholder="Enter latitude">
+                        </div>
+                        <div class="coord-input">
+                            <label for="lon">Longitude:</label>
+                            <input type="number" id="lon" step="0.000001" placeholder="Enter longitude">
+                        </div>
+                        <button id="getLocation" class="btn btn-primary">
+                            <i class="fas fa-crosshairs"></i> Get My Location
+                        </button>
+                    </div>
+                </div>
+
+                <div class="destination-section">
+                    <h3><i class="fas fa-search"></i> Destination</h3>
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Search for a location...">
+                        <button id="searchBtn" class="btn btn-secondary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="manual-coords">
+                        <div class="coord-input">
+                            <label for="destLat">Dest. Latitude:</label>
+                            <input type="number" id="destLat" step="0.000001" placeholder="Destination latitude">
+                        </div>
+                        <div class="coord-input">
+                            <label for="destLon">Dest. Longitude:</label>
+                            <input type="number" id="destLon" step="0.000001" placeholder="Destination longitude">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="radio-section">
+                    <h3><i class="fas fa-broadcast-tower"></i> Amateur Radio Settings</h3>
+                    <div class="radio-controls">
+                        <div class="control-group">
+                            <label for="frequency">Frequency (MHz):</label>
+                            <input type="number" id="frequency" step="0.001" placeholder="146.52">
+                        </div>
+                        <div class="control-group">
+                            <label for="power">Power (W):</label>
+                            <input type="number" id="power" step="0.1" placeholder="5">
+                        </div>
+                        <div class="control-group">
+                            <label for="antenna">Antenna Height (m):</label>
+                            <input type="number" id="antenna" step="0.1" placeholder="2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="results-panel">
+                <div class="bearing-display">
+                    <div class="compass-rose">
+                        <div class="compass-needle" id="compassNeedle">
+                            <div class="needle"></div>
+                        </div>
+                        <div class="compass-labels">
+                            <span class="north">N</span>
+                            <span class="east">E</span>
+                            <span class="south">S</span>
+                            <span class="west">W</span>
+                        </div>
+                    </div>
+                    <div class="bearing-info">
+                        <div class="bearing-value">
+                            <span id="bearingDegrees">0°</span>
+                            <span id="bearingDirection">N</span>
+                        </div>
+                        <div class="distance">
+                            <span id="distanceKm">0 km</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="radio-calculations">
+                    <h4><i class="fas fa-calculator"></i> Radio Calculations</h4>
+                    <div class="calc-grid">
+                        <div class="calc-item">
+                            <span class="label">Path Loss:</span>
+                            <span id="pathLoss">0 dB</span>
+                        </div>
+                        <div class="calc-item">
+                            <span class="label">Free Space Loss:</span>
+                            <span id="freeSpaceLoss">0 dB</span>
+                        </div>
+                        <div class="calc-item">
+                            <span class="label">Signal Strength:</span>
+                            <span id="signalStrength">0 dBm</span>
+                        </div>
+                        <div class="calc-item">
+                            <span class="label">QSO Probability:</span>
+                            <span id="qsoProbability">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="maidenhead-section">
+                    <h4><i class="fas fa-grid-2"></i> Maidenhead Grid</h4>
+                    <div class="grid-info">
+                        <div class="grid-item">
+                            <span class="label">Your Grid:</span>
+                            <span id="yourGrid">--</span>
+                        </div>
+                        <div class="grid-item">
+                            <span class="label">Dest. Grid:</span>
+                            <span id="destGrid">--</span>
+                        </div>
+                        <div class="grid-item">
+                            <span class="label">Grid Distance:</span>
+                            <span id="gridDistance">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="map-container">
+            <div id="map"></div>
+            <div class="map-controls">
+                <button id="centerMap" class="btn btn-small">
+                    <i class="fas fa-crosshairs"></i> Center
+                </button>
+                <button id="toggleLayers" class="btn btn-small">
+                    <i class="fas fa-layer-group"></i> Layers
+                </button>
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <div class="info-tabs">
+                <button class="tab-btn active" data-tab="instructions">Instructions</button>
+                <button class="tab-btn" data-tab="formulas">Formulas</button>
+                <button class="tab-btn" data-tab="about">About</button>
+            </div>
+            <div class="tab-content">
+                <div id="instructions" class="tab-pane active">
+                    <h4>How to Use</h4>
+                    <ol>
+                        <li>Click "Get My Location" to use your current GPS coordinates</li>
+                        <li>Search for a destination or enter coordinates manually</li>
+                        <li>View the compass bearing and distance on the map</li>
+                        <li>Use amateur radio calculations for QSO planning</li>
+                        <li>Check Maidenhead grid squares for contesting</li>
+                    </ol>
+                </div>
+                <div id="formulas" class="tab-pane">
+                    <h4>Radio Formulas</h4>
+                    <ul>
+                        <li><strong>Free Space Loss:</strong> 32.44 + 20log₁₀(f) + 20log₁₀(d)</li>
+                        <li><strong>Path Loss:</strong> Free Space Loss + Terrain Factor</li>
+                        <li><strong>Signal Strength:</strong> Power - Path Loss + Antenna Gain</li>
+                        <li><strong>QSO Probability:</strong> Based on signal strength and distance</li>
+                    </ul>
+                </div>
+                <div id="about" class="tab-pane">
+                    <h4>About This App</h4>
+                    <p>Built for amateur radio operators to calculate bearings, distances, and radio path analysis. Uses OpenStreetMap data and modern web technologies.</p>
+                    <p>Perfect for field day operations, contesting, and general ham radio activities.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

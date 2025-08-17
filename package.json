@@ -1,0 +1,47 @@
+{
+  "name": "amateur-radio-compass-bearing-finder",
+  "version": "1.0.0",
+  "description": "A comprehensive web application for amateur radio operators to find compass bearings, calculate distances, and perform radio path analysis using OpenStreetMap data.",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "serve": "npx http-server -p 8000",
+    "dev": "npx live-server --port=8000"
+  },
+  "keywords": [
+    "amateur-radio",
+    "ham-radio",
+    "compass",
+    "bearing",
+    "gps",
+    "openstreetmap",
+    "leaflet",
+    "maidenhead-grid",
+    "radio-calculations",
+    "path-loss",
+    "qso-probability"
+  ],
+  "author": "Amateur Radio Community",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/amateur-radio-compass-bearing-finder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/amateur-radio-compass-bearing-finder/issues"
+  },
+  "homepage": "https://github.com/yourusername/amateur-radio-compass-bearing-finder#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
