@@ -233,12 +233,13 @@ header p {
     left: 50%;
     width: 4px;
     height: 80px;
-    transform-origin: 50% 0;
+    transform: translate(-50%, -50%); /* center it properly */
+    transform-origin: 50% 50%;       /* rotate around center */
     transition: transform 0.5s ease;
 }
 
 .needle {
-    width: 100%;
+    width: 4px;
     height: 100%;
     background: linear-gradient(to bottom, #e53e3e 0%, #e53e3e 50%, #2d3748 50%, #2d3748 100%);
     border-radius: 2px;
