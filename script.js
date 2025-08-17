@@ -383,7 +383,7 @@ function getBearingDirection(bearing) {
 // Update compass needle
 function updateCompassNeedle(bearing) {
     const needle = document.getElementById('compassNeedle');
-    needle.style.transform = `translate(-50%, -100%) rotate(${bearing}deg)`;
+    needle.style.transform = `rotate(${bearing}deg)`;
 }
 
 // Update radio calculations
