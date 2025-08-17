@@ -81,16 +81,9 @@ header p {
     height: 80px;
     transform: translate(-50%, -100%); /* base alignment only */
     transform-origin: 50% 100%;
-}
-
-/* Actual rotating needle */
-.needle {
-    width: 100%;
-    height: 100%;
     background: linear-gradient(to top, #2d3748 0% 50%, #e53e3e 50% 100%);
     border-radius: 2px;
-    transition: transform 0.5s ease; /* needle rotation happens here */
-    transform-origin: bottom center;
+    transition: transform 0.5s ease;
 }
 
 /* Labels */
