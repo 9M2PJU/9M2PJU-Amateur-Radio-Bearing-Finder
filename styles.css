@@ -141,14 +141,20 @@ input[type="number"]:focus, input[type="text"]:focus {
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
-.search-box {
+.search-container {
     display: flex;
+    flex-direction: column;
     gap: var(--spacing-sm);
     margin-bottom: var(--spacing-sm);
 }
 
+.search-box {
+    display: flex;
+}
+
 .search-box input {
     flex: 1;
+    min-width: 0; /* Prevents input from overflowing */
 }
 
 /* Buttons */
