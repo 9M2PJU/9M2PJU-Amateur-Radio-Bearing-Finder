@@ -193,6 +193,11 @@ input[type="number"]:focus, input[type="text"]:focus {
     transform: translateY(-2px);
 }
 
+.coordinates .btn,
+.search-container .btn {
+    width: 100%;
+}
+
 .btn-small {
     padding: var(--spacing-xs) var(--spacing-sm);
     font-size: var(--font-size-small);
