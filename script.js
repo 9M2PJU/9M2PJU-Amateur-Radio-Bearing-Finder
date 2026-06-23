@@ -4,6 +4,8 @@ let currentMarker;
 let destinationMarker;
 let currentLocation = null;
 let destinationLocation = null;
+let deferredInstallPrompt = null;
+let activeLayerName = 'street';
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
@@ -11,17 +13,16 @@ document.addEventListener('DOMContentLoaded', function() {
     setupEventListeners();
     setupTabs();
     loadDefaultValues();
+    setupPWA();
+    updateNetworkStatus();
 });
 
 // Initialize Leaflet map
 function initializeMap() {
-    map = L.map('map').setView([40.7128, -74.0060], 10);
-    
-    // Add OpenStreetMap tile layer
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors',
-        maxZoom: 19
-    }).addTo(map);
+    map = L.map('map', {
+        zoomControl: true,
+        scrollWheelZoom: true
+    }).setView([3.139, 101.6869], 6);
     
     // Add additional map layers
     const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
@@ -77,6 +78,11 @@ function setupEventListeners() {
             searchLocation();
         }
     });
+
+    window.addEventListener('online', updateNetworkStatus);
+    window.addEventListener('offline', updateNetworkStatus);
+
+    document.getElementById('installApp').addEventListener('click', installApp);
 }
 
 // Setup tab functionality
@@ -89,14 +95,54 @@ function setupTabs() {
             const targetTab = btn.getAttribute('data-tab');
             
             // Remove active class from all tabs and panes
-            tabBtns.forEach(b => b.classList.remove('active'));
+            tabBtns.forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-selected', 'false');
+            });
             tabPanes.forEach(p => p.classList.remove('active'));
             
             // Add active class to clicked tab and corresponding pane
             btn.classList.add('active');
+            btn.setAttribute('aria-selected', 'true');
             document.getElementById(targetTab).classList.add('active');
         });
     });
+}
+
+// Setup PWA install and offline support
+function setupPWA() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js').catch(error => {
+            console.warn('Service worker registration failed:', error);
+        });
+    }
+
+    window.addEventListener('beforeinstallprompt', (event) => {
+        event.preventDefault();
+        deferredInstallPrompt = event;
+        document.getElementById('installApp').hidden = false;
+    });
+
+    window.addEventListener('appinstalled', () => {
+        deferredInstallPrompt = null;
+        document.getElementById('installApp').hidden = true;
+    });
+}
+
+async function installApp() {
+    if (!deferredInstallPrompt) return;
+
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
+    document.getElementById('installApp').hidden = true;
+}
+
+function updateNetworkStatus() {
+    const status = document.getElementById('networkStatus');
+    const isOnline = navigator.onLine;
+    status.textContent = isOnline ? 'Online' : 'Offline ready';
+    status.classList.toggle('offline', !isOnline);
 }
 
 // Load default values
@@ -499,18 +545,19 @@ function centerMapOnCurrent() {
 
 // Toggle map layers
 function toggleMapLayers() {
-    const layers = Object.values(window.mapLayers);
-    const currentLayer = layers.find(layer => map.hasLayer(layer));
-    const currentIndex = layers.indexOf(currentLayer);
-    const nextIndex = (currentIndex + 1) % layers.length;
+    const layerNames = Object.keys(window.mapLayers);
+    const currentIndex = layerNames.indexOf(activeLayerName);
+    const nextLayerName = layerNames[(currentIndex + 1) % layerNames.length];
     
     // Remove current layer
+    const currentLayer = window.mapLayers[activeLayerName];
     if (currentLayer) {
         map.removeLayer(currentLayer);
     }
     
     // Add next layer
-    window.mapLayers[Object.keys(window.mapLayers)[nextIndex]].addTo(map);
+    window.mapLayers[nextLayerName].addTo(map);
+    activeLayerName = nextLayerName;
 }
 
 // Utility function to format coordinates

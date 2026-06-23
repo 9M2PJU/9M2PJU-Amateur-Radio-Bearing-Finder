@@ -2,82 +2,106 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>9M2PJU Amateur Radio Bearing Finder</title>
     <meta name="title" content="9M2PJU Amateur Radio Bearing Finder">
     <meta name="description" content="9M2PJU Amateur Radio Bearing Finder helps ham radio operators calculate bearings, distances, path loss, signal strength, and Maidenhead grid squares. Perfect for DXing, contesting, and field operations.">
     <meta name="keywords" content="radio amatur, cari bearing, bearing kompas, 9M2PJU, amateur radio, ham radio, bearing finder, radio compass, antenna alignment, ham radio tools, ham radio apps, distance calculator, maidenhead grid, free space loss, path loss, signal strength, QSO probability, HF propagation, VHF UHF direction, APRS, DXing, ham radio Malaysia">
     <meta name="author" content="9M2PJU">
+    <meta name="theme-color" content="#10231f">
+    <meta name="color-scheme" content="light">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="9M2PJU Bearing">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1><i class="fas fa-compass"></i> 9M2PJU Amateur Radio Bearing Finder</h1>
-            <p>Find compass bearings and distances for amateur radio operations</p>
+    <div class="app-shell">
+        <header class="app-header">
+            <a class="brand" href="/" aria-label="9M2PJU Amateur Radio Bearing Finder">
+                <img src="icons/logo.svg" alt="" width="72" height="72">
+                <span>
+                    <strong>9M2PJU</strong>
+                    <small>Amateur Radio Bearing Finder</small>
+                </span>
+            </a>
+            <div class="header-actions">
+                <span class="status-pill" id="networkStatus">Online</span>
+                <button id="installApp" class="btn btn-ghost" hidden>
+                    <i class="fas fa-download"></i>
+                    Install
+                </button>
+            </div>
         </header>
 
-        <div class="main-content">
+        <main class="dashboard" aria-label="Bearing finder dashboard">
             <div class="controls-panel">
-                <div class="location-section">
-                    <h3><i class="fas fa-map-marker-alt"></i> Current Location</h3>
-                    <div class="coordinates">
-                        <div class="coord-input">
-                            <label for="lat">Latitude:</label>
-                            <input type="number" id="lat" step="0.000001" placeholder="Enter latitude">
-                        </div>
-                        <div class="coord-input">
-                            <label for="lon">Longitude:</label>
-                            <input type="number" id="lon" step="0.000001" placeholder="Enter longitude">
-                        </div>
-                        <button id="getLocation" class="btn btn-primary">
-                            <i class="fas fa-crosshairs"></i> Get My Location
+                <section class="panel-section">
+                    <div class="section-heading">
+                        <h2><i class="fas fa-location-crosshairs"></i> Station</h2>
+                        <button id="getLocation" class="icon-btn" title="Use GPS location" aria-label="Use GPS location">
+                            <i class="fas fa-crosshairs"></i>
                         </button>
                     </div>
-                </div>
+                    <div class="field-grid">
+                        <div class="field">
+                            <label for="lat">Latitude</label>
+                            <input type="number" id="lat" step="0.000001" placeholder="Latitude">
+                        </div>
+                        <div class="field">
+                            <label for="lon">Longitude</label>
+                            <input type="number" id="lon" step="0.000001" placeholder="Longitude">
+                        </div>
+                    </div>
+                </section>
 
-                <div class="destination-section">
-                    <h3><i class="fas fa-search"></i> Destination</h3>
+                <section class="panel-section">
+                    <div class="section-heading">
+                        <h2><i class="fas fa-tower-broadcast"></i> Target</h2>
+                    </div>
                     <div class="search-container">
-                        <div class="search-box">
-                            <input type="text" id="searchInput" placeholder="Search for a location...">
-                        </div>
-                        <button id="searchBtn" class="btn btn-secondary">
-                            <i class="fas fa-search"></i> Search
+                        <input type="text" id="searchInput" placeholder="Search place or grid area">
+                        <button id="searchBtn" class="icon-btn dark" title="Search destination" aria-label="Search destination">
+                            <i class="fas fa-search"></i>
                         </button>
                     </div>
-                    <div class="manual-coords">
-                        <div class="coord-input">
-                            <label for="destLat">Dest. Latitude:</label>
-                            <input type="number" id="destLat" step="0.000001" placeholder="Destination latitude">
+                    <div class="field-grid">
+                        <div class="field">
+                            <label for="destLat">Destination latitude</label>
+                            <input type="number" id="destLat" step="0.000001" placeholder="Dest. lat">
                         </div>
-                        <div class="coord-input">
-                            <label for="destLon">Dest. Longitude:</label>
-                            <input type="number" id="destLon" step="0.000001" placeholder="Destination longitude">
+                        <div class="field">
+                            <label for="destLon">Destination longitude</label>
+                            <input type="number" id="destLon" step="0.000001" placeholder="Dest. lon">
                         </div>
                     </div>
-                </div>
+                </section>
 
-                <div class="radio-section">
-                    <h3><i class="fas fa-broadcast-tower"></i> Amateur Radio Settings</h3>
-                    <div class="radio-controls">
-                        <div class="control-group">
-                            <label for="frequency">Frequency (MHz):</label>
+                <section class="panel-section">
+                    <div class="section-heading">
+                        <h2><i class="fas fa-sliders"></i> RF setup</h2>
+                    </div>
+                    <div class="field-grid three">
+                        <div class="field">
+                            <label for="frequency">Frequency MHz</label>
                             <input type="number" id="frequency" step="0.001" placeholder="146.52">
                         </div>
-                        <div class="control-group">
-                            <label for="power">Power (W):</label>
+                        <div class="field">
+                            <label for="power">Power W</label>
                             <input type="number" id="power" step="0.1" placeholder="5">
                         </div>
-                        <div class="control-group">
-                            <label for="antenna">Antenna Height (m):</label>
+                        <div class="field">
+                            <label for="antenna">Antenna m</label>
                             <input type="number" id="antenna" step="0.1" placeholder="2">
                         </div>
                     </div>
-                </div>
+                </section>
             </div>
 
             <div class="results-panel">
@@ -93,20 +117,23 @@
                             <span class="south">S</span>
                             <span class="west">W</span>
                         </div>
+                        <div class="compass-ring"></div>
                     </div>
                     <div class="bearing-info">
                         <div class="bearing-value">
+                            <span class="metric-label">Bearing</span>
                             <span id="bearingDegrees">0°</span>
                             <span id="bearingDirection">N</span>
                         </div>
-                        <div class="distance">
-                            <span id="distanceKm">0 km</span>
+                        <div class="distance metric-card">
+                            <span class="metric-label">Distance</span>
+                            <strong id="distanceKm">0 km</strong>
                         </div>
                     </div>
                 </div>
 
                 <div class="radio-calculations">
-                    <h4><i class="fas fa-calculator"></i> Radio Calculations</h4>
+                    <h2><i class="fas fa-calculator"></i> Radio calculations</h2>
                     <div class="calc-grid">
                         <div class="calc-item">
                             <span class="label">Path Loss:</span>
@@ -128,7 +155,7 @@
                 </div>
 
                 <div class="maidenhead-section">
-                    <h4><i class="fas fa-grid-2"></i> Maidenhead Grid</h4>
+                    <h2><i class="fas fa-border-all"></i> Maidenhead grid</h2>
                     <div class="grid-info">
                         <div class="grid-item">
                             <span class="label">Your Grid:</span>
@@ -145,29 +172,29 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="map-container">
-            <div id="map"></div>
-            <div class="map-controls">
-                <button id="centerMap" class="btn btn-small">
-                    <i class="fas fa-crosshairs"></i> Center
-                </button>
-                <button id="toggleLayers" class="btn btn-small">
-                    <i class="fas fa-layer-group"></i> Layers
-                </button>
-            </div>
-        </div>
+            <section class="map-container" aria-label="Map and path preview">
+                <div id="map"></div>
+                <div class="map-controls">
+                    <button id="centerMap" class="icon-btn light" title="Center on station" aria-label="Center on station">
+                        <i class="fas fa-crosshairs"></i>
+                    </button>
+                    <button id="toggleLayers" class="icon-btn light" title="Change map layer" aria-label="Change map layer">
+                        <i class="fas fa-layer-group"></i>
+                    </button>
+                </div>
+            </section>
+        </main>
 
-        <div class="info-panel">
-            <div class="info-tabs">
-                <button class="tab-btn active" data-tab="instructions">Instructions</button>
-                <button class="tab-btn" data-tab="formulas">Formulas</button>
-                <button class="tab-btn" data-tab="about">About</button>
+        <section class="info-panel" aria-label="Reference information">
+            <div class="info-tabs" role="tablist">
+                <button class="tab-btn active" data-tab="instructions" role="tab" aria-selected="true">Field flow</button>
+                <button class="tab-btn" data-tab="formulas" role="tab" aria-selected="false">Formulas</button>
+                <button class="tab-btn" data-tab="about" role="tab" aria-selected="false">About</button>
             </div>
             <div class="tab-content">
-                <div id="instructions" class="tab-pane active">
-                    <h4>How to Use</h4>
+                <div id="instructions" class="tab-pane active" role="tabpanel">
+                    <h3>Field flow</h3>
                     <ol>
                         <li>Click "Get My Location" to use your current GPS coordinates</li>
                         <li>Search for a destination or enter coordinates manually</li>
@@ -176,8 +203,8 @@
                         <li>Check Maidenhead grid squares for contesting</li>
                     </ol>
                 </div>
-                <div id="formulas" class="tab-pane">
-                    <h4>Radio Formulas</h4>
+                <div id="formulas" class="tab-pane" role="tabpanel">
+                    <h3>Radio formulas</h3>
                     <ul>
                         <li><strong>Free Space Loss:</strong> 32.44 + 20log₁₀(f) + 20log₁₀(d)</li>
                         <li><strong>Path Loss:</strong> Free Space Loss + Terrain Factor</li>
@@ -185,13 +212,13 @@
                         <li><strong>QSO Probability:</strong> Based on signal strength and distance</li>
                     </ul>
                 </div>
-                <div id="about" class="tab-pane">
-                    <h4>Made for 🇲🇾 by 9M2PJU</h4>
+                <div id="about" class="tab-pane" role="tabpanel">
+                    <h3>Made for 9M2PJU</h3>
                     <p>Built for amateur radio operators to calculate bearings, distances, and radio path analysis.</p>
                     <p>Perfect for field day operations, contesting, and general ham radio activities.</p>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
