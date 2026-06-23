@@ -49,9 +49,10 @@ button {
 }
 
 .app-shell {
-    width: min(1480px, 100%);
+    width: 100%;
+    min-height: 100vh;
     margin: 0 auto;
-    padding: max(1rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1.2rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+    padding: max(0.75rem, env(safe-area-inset-top)) max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
 }
 
 .app-header {
@@ -59,7 +60,7 @@ button {
     align-items: center;
     justify-content: space-between;
     gap: var(--space-3);
-    padding: var(--space-3) 0 var(--space-4);
+    padding: 0 0 var(--space-2);
 }
 
 .brand {
@@ -72,16 +73,16 @@ button {
 }
 
 .brand img {
-    width: 4.25rem;
-    height: 4.25rem;
+    width: 3.25rem;
+    height: 3.25rem;
     flex: 0 0 auto;
-    border-radius: 18px;
+    border-radius: 14px;
     box-shadow: 0 12px 28px rgba(16, 35, 31, 0.18);
 }
 
 .brand strong {
     display: block;
-    font-size: 1.75rem;
+    font-size: 1.45rem;
     line-height: 1;
     letter-spacing: 0;
 }
@@ -122,16 +123,20 @@ button {
 
 .dashboard {
     display: grid;
-    grid-template-columns: minmax(19rem, 0.9fr) minmax(20rem, 0.95fr) minmax(28rem, 1.55fr);
-    grid-template-areas: "controls results map";
-    gap: var(--space-4);
+    grid-template-columns: minmax(38rem, 44rem) minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    grid-template-areas:
+        "controls map"
+        "results map";
+    gap: var(--space-3);
     align-items: stretch;
+    height: calc(100vh - 5.25rem);
+    min-height: 0;
 }
 
 .controls-panel,
 .results-panel,
-.map-container,
-.info-panel {
+.map-container {
     background: var(--panel);
     border: 1px solid var(--line);
     border-radius: var(--radius);
@@ -140,34 +145,39 @@ button {
 
 .controls-panel {
     grid-area: controls;
-    padding: var(--space-4);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+    padding: var(--space-3);
 }
 
 .results-panel {
     grid-area: results;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-    padding: var(--space-4);
+    display: grid;
+    grid-template-columns: 16.5rem minmax(16rem, 1fr) minmax(10rem, 0.72fr);
+    gap: var(--space-2);
+    align-items: stretch;
+    min-height: 0;
+    padding: var(--space-3);
 }
 
 .map-container {
     grid-area: map;
     position: relative;
-    min-height: 38rem;
+    min-height: 0;
     overflow: hidden;
 }
 
 .panel-section {
-    padding-bottom: var(--space-4);
-    margin-bottom: var(--space-4);
-    border-bottom: 1px solid var(--line);
+    min-width: 0;
+    padding: var(--space-2);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: #fbfcfa;
 }
 
 .panel-section:last-child {
-    margin-bottom: 0;
-    padding-bottom: 0;
-    border-bottom: 0;
+    grid-column: 1 / -1;
 }
 
 .section-heading {
@@ -175,7 +185,7 @@ button {
     align-items: center;
     justify-content: space-between;
     gap: var(--space-2);
-    margin-bottom: var(--space-3);
+    margin-bottom: var(--space-2);
 }
 
 h2,
@@ -199,7 +209,7 @@ h3 i {
 }
 
 .field-grid.three {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .field {
@@ -219,8 +229,8 @@ h3 i {
 input[type="number"],
 input[type="text"] {
     width: 100%;
-    min-height: 2.9rem;
-    padding: 0.7rem 0.8rem;
+    min-height: 2.45rem;
+    padding: 0.52rem 0.7rem;
     border: 1px solid #cdd8d0;
     border-radius: var(--radius);
     color: var(--ink);
@@ -267,8 +277,8 @@ input:focus {
 }
 
 .icon-btn {
-    width: 2.9rem;
-    height: 2.9rem;
+    width: 2.65rem;
+    height: 2.65rem;
     color: #ffffff;
     background: var(--signal-dark);
 }
@@ -297,19 +307,21 @@ input:focus {
 
 .bearing-display {
     display: grid;
-    gap: var(--space-4);
+    grid-template-columns: 9.75rem minmax(0, 1fr);
+    gap: var(--space-2);
     place-items: center;
-    padding: var(--space-4);
+    padding: var(--space-2);
     color: #ffffff;
     background:
         radial-gradient(circle at 50% 40%, rgba(242, 184, 75, 0.26), transparent 36%),
         linear-gradient(145deg, #10231f, #1b3d36);
     border-radius: var(--radius);
+    grid-row: auto;
 }
 
 .compass-rose {
     position: relative;
-    width: min(17rem, 70vw);
+    width: min(9.75rem, 58vw);
     aspect-ratio: 1;
     border: 2px solid rgba(255, 255, 255, 0.28);
     border-radius: 50%;
@@ -379,14 +391,14 @@ input:focus {
 .bearing-info {
     display: grid;
     width: 100%;
-    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-columns: 1fr;
     gap: var(--space-2);
 }
 
 .bearing-value,
 .metric-card {
     min-width: 0;
-    padding: var(--space-3);
+    padding: var(--space-2);
     border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: var(--radius);
     background: rgba(255, 255, 255, 0.08);
@@ -404,7 +416,7 @@ input:focus {
 #bearingDegrees {
     display: block;
     color: #ffffff;
-    font-size: 2.7rem;
+    font-size: 2rem;
     font-weight: 900;
     line-height: 0.95;
 }
@@ -422,13 +434,18 @@ input:focus {
 .radio-calculations,
 .maidenhead-section {
     display: grid;
-    gap: var(--space-3);
+    gap: var(--space-2);
+    align-content: start;
+}
+
+.maidenhead-section {
+    grid-column: auto;
 }
 
 .calc-grid,
 .grid-info {
     display: grid;
-    gap: var(--space-2);
+    gap: 0.55rem;
 }
 
 .calc-grid {
@@ -440,7 +457,7 @@ input:focus {
     display: grid;
     gap: 0.2rem;
     min-width: 0;
-    padding: var(--space-3);
+    padding: 0.62rem 0.7rem;
     border: 1px solid var(--line);
     border-left: 4px solid var(--signal);
     border-radius: var(--radius);
@@ -458,7 +475,7 @@ input:focus {
 .grid-item span:last-child {
     overflow-wrap: anywhere;
     color: var(--ink);
-    font-size: 1.05rem;
+    font-size: 0.98rem;
     font-weight: 900;
 }
 
@@ -469,7 +486,7 @@ input:focus {
 #map {
     width: 100%;
     height: 100%;
-    min-height: 38rem;
+    min-height: calc(100vh - 5.25rem);
     background: #dfe8dd;
 }
 
@@ -480,54 +497,6 @@ input:focus {
     bottom: var(--space-3);
     display: flex;
     gap: var(--space-2);
-}
-
-.info-panel {
-    margin-top: var(--space-4);
-    padding: var(--space-4);
-}
-
-.info-tabs {
-    display: flex;
-    gap: var(--space-2);
-    margin-bottom: var(--space-3);
-    overflow-x: auto;
-}
-
-.tab-btn {
-    min-height: 2.6rem;
-    padding: 0 var(--space-3);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    color: var(--ink-soft);
-    background: #ffffff;
-    cursor: pointer;
-    font-weight: 900;
-    white-space: nowrap;
-}
-
-.tab-btn.active {
-    color: #ffffff;
-    border-color: var(--signal-dark);
-    background: var(--signal-dark);
-}
-
-.tab-pane {
-    display: none;
-    color: var(--ink-soft);
-}
-
-.tab-pane.active {
-    display: block;
-}
-
-.tab-pane h3 {
-    margin-bottom: var(--space-2);
-}
-
-.tab-pane li,
-.tab-pane p {
-    margin-bottom: 0.45rem;
 }
 
 .leaflet-container {
@@ -548,15 +517,36 @@ input:focus {
 
 @media (max-width: 1180px) {
     .dashboard {
-        grid-template-columns: minmax(19rem, 0.9fr) minmax(24rem, 1.1fr);
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto auto 32rem;
         grid-template-areas:
-            "controls results"
-            "map map";
+            "controls"
+            "results"
+            "map";
+        min-height: 0;
+        height: auto;
+    }
+
+    .results-panel {
+        grid-template-columns: minmax(18rem, 0.9fr) minmax(20rem, 1.1fr);
     }
 
     .map-container,
     #map {
-        min-height: 30rem;
+        min-height: 32rem;
+    }
+}
+
+@media (min-width: 1181px) {
+    html,
+    body {
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .app-shell {
+        height: 100vh;
+        overflow: hidden;
     }
 }
 
@@ -597,9 +587,18 @@ input:focus {
     }
 
     .controls-panel,
-    .results-panel,
-    .info-panel {
+    .results-panel {
+        display: grid;
+        grid-template-columns: 1fr;
         padding: var(--space-3);
+    }
+
+    .controls-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .panel-section:last-child {
+        grid-column: auto;
     }
 
     .field-grid,
@@ -611,6 +610,20 @@ input:focus {
 
     .bearing-display {
         padding: var(--space-3);
+        grid-row: auto;
+        grid-template-columns: 1fr;
+    }
+
+    .maidenhead-section {
+        grid-column: auto;
+    }
+
+    .compass-rose {
+        width: min(15rem, 72vw);
+    }
+
+    #bearingDegrees {
+        font-size: 2.25rem;
     }
 
     #bearingDegrees {
@@ -619,7 +632,7 @@ input:focus {
 
     .map-container,
     #map {
-        min-height: 24rem;
+        min-height: 28rem;
     }
 
     .map-controls {

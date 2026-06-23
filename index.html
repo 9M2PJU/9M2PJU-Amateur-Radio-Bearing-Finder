@@ -73,11 +73,11 @@
                     </div>
                     <div class="field-grid">
                         <div class="field">
-                            <label for="destLat">Destination latitude</label>
+                            <label for="destLat">Dest. latitude</label>
                             <input type="number" id="destLat" step="0.000001" placeholder="Dest. lat">
                         </div>
                         <div class="field">
-                            <label for="destLon">Destination longitude</label>
+                            <label for="destLon">Dest. longitude</label>
                             <input type="number" id="destLon" step="0.000001" placeholder="Dest. lon">
                         </div>
                     </div>
@@ -186,39 +186,6 @@
             </section>
         </main>
 
-        <section class="info-panel" aria-label="Reference information">
-            <div class="info-tabs" role="tablist">
-                <button class="tab-btn active" data-tab="instructions" role="tab" aria-selected="true">Field flow</button>
-                <button class="tab-btn" data-tab="formulas" role="tab" aria-selected="false">Formulas</button>
-                <button class="tab-btn" data-tab="about" role="tab" aria-selected="false">About</button>
-            </div>
-            <div class="tab-content">
-                <div id="instructions" class="tab-pane active" role="tabpanel">
-                    <h3>Field flow</h3>
-                    <ol>
-                        <li>Click "Get My Location" to use your current GPS coordinates</li>
-                        <li>Search for a destination or enter coordinates manually</li>
-                        <li>View the compass bearing and distance on the map</li>
-                        <li>Use amateur radio calculations for QSO planning</li>
-                        <li>Check Maidenhead grid squares for contesting</li>
-                    </ol>
-                </div>
-                <div id="formulas" class="tab-pane" role="tabpanel">
-                    <h3>Radio formulas</h3>
-                    <ul>
-                        <li><strong>Free Space Loss:</strong> 32.44 + 20log₁₀(f) + 20log₁₀(d)</li>
-                        <li><strong>Path Loss:</strong> Free Space Loss + Terrain Factor</li>
-                        <li><strong>Signal Strength:</strong> Power - Path Loss + Antenna Gain</li>
-                        <li><strong>QSO Probability:</strong> Based on signal strength and distance</li>
-                    </ul>
-                </div>
-                <div id="about" class="tab-pane" role="tabpanel">
-                    <h3>Made for 9M2PJU</h3>
-                    <p>Built for amateur radio operators to calculate bearings, distances, and radio path analysis.</p>
-                    <p>Perfect for field day operations, contesting, and general ham radio activities.</p>
-                </div>
-            </div>
-        </section>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

@@ -11,7 +11,6 @@ let activeLayerName = 'street';
 document.addEventListener('DOMContentLoaded', function() {
     initializeMap();
     setupEventListeners();
-    setupTabs();
     loadDefaultValues();
     setupPWA();
     updateNetworkStatus();
@@ -83,30 +82,6 @@ function setupEventListeners() {
     window.addEventListener('offline', updateNetworkStatus);
 
     document.getElementById('installApp').addEventListener('click', installApp);
-}
-
-// Setup tab functionality
-function setupTabs() {
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    const tabPanes = document.querySelectorAll('.tab-pane');
-    
-    tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const targetTab = btn.getAttribute('data-tab');
-            
-            // Remove active class from all tabs and panes
-            tabBtns.forEach(b => {
-                b.classList.remove('active');
-                b.setAttribute('aria-selected', 'false');
-            });
-            tabPanes.forEach(p => p.classList.remove('active'));
-            
-            // Add active class to clicked tab and corresponding pane
-            btn.classList.add('active');
-            btn.setAttribute('aria-selected', 'true');
-            document.getElementById(targetTab).classList.add('active');
-        });
-    });
 }
 
 // Setup PWA install and offline support
