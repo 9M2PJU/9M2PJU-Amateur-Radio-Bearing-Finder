@@ -1,9 +1,7 @@
-const CACHE_NAME = '9m2pju-bearing-v2';
+const CACHE_NAME = '9m2pju-bearing-v3';
 const APP_SHELL = [
     './',
     './index.html',
-    './styles.css',
-    './script.js',
     './manifest.webmanifest',
     './icons/logo.svg',
     './icons/favicon.svg',
@@ -39,6 +37,19 @@ self.addEventListener('fetch', (event) => {
     if (requestUrl.origin !== self.location.origin) {
         event.respondWith(
             caches.match(event.request).then((cached) => cached || fetch(event.request))
+        );
+        return;
+    }
+
+    if (event.request.mode === 'navigate') {
+        event.respondWith(
+            fetch(event.request)
+                .then((response) => {
+                    const copy = response.clone();
+                    caches.open(CACHE_NAME).then((cache) => cache.put('./index.html', copy));
+                    return response;
+                })
+                .catch(() => caches.match('./index.html'))
         );
         return;
     }

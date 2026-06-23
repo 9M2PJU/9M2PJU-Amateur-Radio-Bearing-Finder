@@ -14,18 +14,17 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="9M2PJU Bearing">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="manifest" href="manifest.webmanifest">
-    <link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="icon" href="./icons/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="app-shell">
         <header class="app-header">
-            <a class="brand" href="/" aria-label="9M2PJU Amateur Radio Bearing Finder">
-                <img src="icons/logo.svg" alt="" width="72" height="72">
+            <a class="brand" href="./" aria-label="9M2PJU Amateur Radio Bearing Finder">
+                <img src="./icons/logo.svg" alt="" width="72" height="72">
                 <span>
                     <strong>9M2PJU</strong>
                     <small>Amateur Radio Bearing Finder</small>
@@ -191,6 +190,6 @@
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="script.js"></script>
+    <script type="module" src="./src/main.js"></script>
 </body>
 </html>

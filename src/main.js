@@ -1,3 +1,5 @@
+import './styles.css';
+
 // Global variables
 let map;
 let currentMarker;
@@ -131,8 +133,10 @@ function loadDefaultValues() {
 function getCurrentLocation() {
     const btn = document.getElementById('getLocation');
     const originalText = btn.innerHTML;
+    const originalLabel = btn.getAttribute('aria-label');
     
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Getting Location...';
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    btn.setAttribute('aria-label', 'Getting GPS location');
     btn.disabled = true;
     
     if (navigator.geolocation) {
@@ -159,22 +163,26 @@ function getCurrentLocation() {
                 // Update Maidenhead grid
                 updateMaidenheadGrid();
                 
-                btn.innerHTML = '<i class="fas fa-check"></i> Location Set!';
+                btn.innerHTML = '<i class="fas fa-check"></i>';
+                btn.setAttribute('aria-label', 'Location set');
                 btn.classList.add('success');
                 
                 setTimeout(() => {
                     btn.innerHTML = originalText;
+                    btn.setAttribute('aria-label', originalLabel);
                     btn.disabled = false;
                     btn.classList.remove('success');
                 }, 2000);
             },
             function(error) {
                 console.error('Error getting location:', error);
-                btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Location Error';
+                btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+                btn.setAttribute('aria-label', 'Location error');
                 btn.classList.add('error');
                 
                 setTimeout(() => {
                     btn.innerHTML = originalText;
+                    btn.setAttribute('aria-label', originalLabel);
                     btn.disabled = false;
                     btn.classList.remove('error');
                 }, 3000);
@@ -188,6 +196,7 @@ function getCurrentLocation() {
     } else {
         alert('Geolocation is not supported by this browser.');
         btn.innerHTML = originalText;
+        btn.setAttribute('aria-label', originalLabel);
         btn.disabled = false;
     }
 }

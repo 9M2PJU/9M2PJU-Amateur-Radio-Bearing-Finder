@@ -2,11 +2,12 @@
   "name": "amateur-radio-compass-bearing-finder",
   "version": "1.0.0",
   "description": "A comprehensive web application for amateur radio operators to find compass bearings, calculate distances, and perform radio path analysis using OpenStreetMap data.",
-  "main": "index.html",
+  "type": "module",
+  "private": true,
   "scripts": {
-    "start": "python3 -m http.server 8000",
-    "serve": "npx http-server -p 8000",
-    "dev": "npx live-server --port=8000"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0"
   },
   "keywords": [
     "amateur-radio",
@@ -33,8 +34,7 @@
   "homepage": "https://github.com/9M2PJU/9M2PJU-Amateur-Radio-Bearing-Finder#readme",
   "dependencies": {},
   "devDependencies": {
-    "http-server": "^14.1.1",
-    "live-server": "^1.2.2"
+    "vite": "^8.0.16"
   },
   "browserslist": [
     "> 1%",
@@ -42,6 +42,6 @@
     "not dead"
   ],
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=22.0.0"
   }
 }
