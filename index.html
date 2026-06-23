@@ -52,11 +52,11 @@
                     <div class="field-grid">
                         <div class="field">
                             <label for="lat">Latitude</label>
-                            <input type="number" id="lat" step="0.000001" placeholder="Latitude">
+                            <input type="number" id="lat" step="0.000001" placeholder="Lat">
                         </div>
                         <div class="field">
                             <label for="lon">Longitude</label>
-                            <input type="number" id="lon" step="0.000001" placeholder="Longitude">
+                            <input type="number" id="lon" step="0.000001" placeholder="Lon">
                         </div>
                     </div>
                 </section>
@@ -66,7 +66,7 @@
                         <h2><i class="fas fa-tower-broadcast"></i> Target</h2>
                     </div>
                     <div class="search-container">
-                        <input type="text" id="searchInput" placeholder="Search place or grid area">
+                        <input type="text" id="searchInput" placeholder="Search location">
                         <button id="searchBtn" class="icon-btn dark" title="Search destination" aria-label="Search destination">
                             <i class="fas fa-search"></i>
                         </button>
@@ -74,11 +74,11 @@
                     <div class="field-grid">
                         <div class="field">
                             <label for="destLat">Dest. latitude</label>
-                            <input type="number" id="destLat" step="0.000001" placeholder="Dest. lat">
+                            <input type="number" id="destLat" step="0.000001" placeholder="Dest lat">
                         </div>
                         <div class="field">
                             <label for="destLon">Dest. longitude</label>
-                            <input type="number" id="destLon" step="0.000001" placeholder="Dest. lon">
+                            <input type="number" id="destLon" step="0.000001" placeholder="Dest lon">
                         </div>
                     </div>
                 </section>
@@ -132,42 +132,44 @@
                     </div>
                 </div>
 
-                <div class="radio-calculations">
-                    <h2><i class="fas fa-calculator"></i> Radio calculations</h2>
-                    <div class="calc-grid">
-                        <div class="calc-item">
-                            <span class="label">Path Loss:</span>
-                            <span id="pathLoss">0 dB</span>
-                        </div>
-                        <div class="calc-item">
-                            <span class="label">Free Space Loss:</span>
-                            <span id="freeSpaceLoss">0 dB</span>
-                        </div>
-                        <div class="calc-item">
-                            <span class="label">Signal Strength:</span>
-                            <span id="signalStrength">0 dBm</span>
-                        </div>
-                        <div class="calc-item">
-                            <span class="label">QSO Probability:</span>
-                            <span id="qsoProbability">0%</span>
+                <div class="metrics-panel">
+                    <div class="radio-calculations">
+                        <h2><i class="fas fa-calculator"></i> Radio calculations</h2>
+                        <div class="calc-grid">
+                            <div class="calc-item">
+                                <span class="label">Path Loss:</span>
+                                <span id="pathLoss">0 dB</span>
+                            </div>
+                            <div class="calc-item">
+                                <span class="label">Free Space Loss:</span>
+                                <span id="freeSpaceLoss">0 dB</span>
+                            </div>
+                            <div class="calc-item">
+                                <span class="label">Signal Strength:</span>
+                                <span id="signalStrength">0 dBm</span>
+                            </div>
+                            <div class="calc-item">
+                                <span class="label">QSO Probability:</span>
+                                <span id="qsoProbability">0%</span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="maidenhead-section">
-                    <h2><i class="fas fa-border-all"></i> Maidenhead grid</h2>
-                    <div class="grid-info">
-                        <div class="grid-item">
-                            <span class="label">Your Grid:</span>
-                            <span id="yourGrid">--</span>
-                        </div>
-                        <div class="grid-item">
-                            <span class="label">Dest. Grid:</span>
-                            <span id="destGrid">--</span>
-                        </div>
-                        <div class="grid-item">
-                            <span class="label">Grid Distance:</span>
-                            <span id="gridDistance">--</span>
+                    <div class="maidenhead-section">
+                        <h2><i class="fas fa-border-all"></i> Maidenhead grid</h2>
+                        <div class="grid-info">
+                            <div class="grid-item">
+                                <span class="label">Your Grid:</span>
+                                <span id="yourGrid">--</span>
+                            </div>
+                            <div class="grid-item">
+                                <span class="label">Dest. Grid:</span>
+                                <span id="destGrid">--</span>
+                            </div>
+                            <div class="grid-item">
+                                <span class="label">Grid Distance:</span>
+                                <span id="gridDistance">--</span>
+                            </div>
                         </div>
                     </div>
                 </div>

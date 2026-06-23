@@ -1,4 +1,4 @@
-const CACHE_NAME = '9m2pju-bearing-v1';
+const CACHE_NAME = '9m2pju-bearing-v2';
 const APP_SHELL = [
     './',
     './index.html',

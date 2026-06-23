@@ -123,7 +123,7 @@ button {
 
 .dashboard {
     display: grid;
-    grid-template-columns: minmax(38rem, 44rem) minmax(0, 1fr);
+    grid-template-columns: minmax(44rem, 46rem) minmax(0, 1fr);
     grid-template-rows: auto minmax(0, 1fr);
     grid-template-areas:
         "controls map"
@@ -137,6 +137,7 @@ button {
 .controls-panel,
 .results-panel,
 .map-container {
+    min-width: 0;
     background: var(--panel);
     border: 1px solid var(--line);
     border-radius: var(--radius);
@@ -154,10 +155,11 @@ button {
 .results-panel {
     grid-area: results;
     display: grid;
-    grid-template-columns: 16.5rem minmax(16rem, 1fr) minmax(10rem, 0.72fr);
+    grid-template-columns: minmax(13rem, 15rem) minmax(0, 1fr) minmax(8rem, 0.72fr);
     gap: var(--space-2);
     align-items: stretch;
     min-height: 0;
+    overflow: hidden;
     padding: var(--space-3);
 }
 
@@ -307,10 +309,10 @@ input:focus {
 
 .bearing-display {
     display: grid;
-    grid-template-columns: 9.75rem minmax(0, 1fr);
-    gap: var(--space-2);
+    grid-template-columns: minmax(7.5rem, 8.5rem) minmax(0, 1fr);
+    gap: 0.65rem;
     place-items: center;
-    padding: var(--space-2);
+    padding: 0.7rem;
     color: #ffffff;
     background:
         radial-gradient(circle at 50% 40%, rgba(242, 184, 75, 0.26), transparent 36%),
@@ -321,7 +323,7 @@ input:focus {
 
 .compass-rose {
     position: relative;
-    width: min(9.75rem, 58vw);
+    width: min(8.5rem, 30vw);
     aspect-ratio: 1;
     border: 2px solid rgba(255, 255, 255, 0.28);
     border-radius: 50%;
@@ -392,13 +394,13 @@ input:focus {
     display: grid;
     width: 100%;
     grid-template-columns: 1fr;
-    gap: var(--space-2);
+    gap: 0.55rem;
 }
 
 .bearing-value,
 .metric-card {
     min-width: 0;
-    padding: var(--space-2);
+    padding: 0.65rem;
     border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: var(--radius);
     background: rgba(255, 255, 255, 0.08);
@@ -416,7 +418,7 @@ input:focus {
 #bearingDegrees {
     display: block;
     color: #ffffff;
-    font-size: 2rem;
+    font-size: 1.7rem;
     font-weight: 900;
     line-height: 0.95;
 }
@@ -428,7 +430,7 @@ input:focus {
 
 .metric-card strong {
     color: #ffffff;
-    font-size: 1.35rem;
+    font-size: 1.05rem;
 }
 
 .radio-calculations,
@@ -436,20 +438,27 @@ input:focus {
     display: grid;
     gap: var(--space-2);
     align-content: start;
+    min-width: 0;
 }
 
-.maidenhead-section {
-    grid-column: auto;
+.metrics-panel {
+    display: contents;
+    min-width: 0;
 }
 
 .calc-grid,
 .grid-info {
     display: grid;
     gap: 0.55rem;
+    min-width: 0;
 }
 
 .calc-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-info {
+    grid-template-columns: 1fr;
 }
 
 .calc-item,
@@ -457,6 +466,7 @@ input:focus {
     display: grid;
     gap: 0.2rem;
     min-width: 0;
+    overflow: hidden;
     padding: 0.62rem 0.7rem;
     border: 1px solid var(--line);
     border-left: 4px solid var(--signal);
@@ -467,15 +477,16 @@ input:focus {
 .calc-item .label,
 .grid-item .label {
     color: var(--muted);
-    font-size: 0.78rem;
+    font-size: 0.72rem;
     font-weight: 800;
+    overflow-wrap: anywhere;
 }
 
 .calc-item span:last-child,
 .grid-item span:last-child {
     overflow-wrap: anywhere;
     color: var(--ink);
-    font-size: 0.98rem;
+    font-size: 0.95rem;
     font-weight: 900;
 }
 
@@ -528,7 +539,7 @@ input:focus {
     }
 
     .results-panel {
-        grid-template-columns: minmax(18rem, 0.9fr) minmax(20rem, 1.1fr);
+        grid-template-columns: minmax(13rem, 0.6fr) minmax(0, 1fr) minmax(10rem, 0.75fr);
     }
 
     .map-container,
@@ -593,6 +604,11 @@ input:focus {
         padding: var(--space-3);
     }
 
+    .metrics-panel {
+        display: grid;
+        gap: var(--space-3);
+    }
+
     .controls-panel {
         grid-template-columns: 1fr;
     }
@@ -616,6 +632,10 @@ input:focus {
 
     .maidenhead-section {
         grid-column: auto;
+    }
+
+    .grid-info {
+        grid-template-columns: 1fr;
     }
 
     .compass-rose {
